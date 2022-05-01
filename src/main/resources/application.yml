@@ -1,0 +1,48 @@
+server:
+  port: 8090  # 服务端口
+  tomcat:
+    accept-count: 800
+    ## 最大工作线程数，默认200。（4核8g内存，线程数经验值800，操作系统做线程之间的切换调度是有系统开销的，所以不是越多越好。）
+    max-threads: 500
+    ## 最小工作空闲线程数，默认10。（适当增大一些，以便应对突然增长的访问量）
+    min-spare-threads: 100
+    max-connections: 20000
+
+
+spring:
+  jpa: # jpa 配置
+    hibernate:
+      ddl-auto: update # 启动更新和创建数据库表  none 不处理
+    show-sql: true
+  datasource:  # mysql 数据源配置
+    url: jdbc:mysql://localhost:3306/world
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  #thymeleaf模板配置
+  thymeleaf:
+    mode: HTML5
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  session:
+    store-type: none
+  servlet:
+    multipart:
+      max-file-size: 20MB     #文件上传限制
+      max-request-size: 20MB  #文件上传限制
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+      http:
+  web:
+    resources:
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+
+logging:
+  file:
+    path: logs/web # 打印日志的目录
+  level:
+    root: info
+    org.springframework.web: trace  # 打印mapping
